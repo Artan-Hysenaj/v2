@@ -1,40 +1,54 @@
-import Link from 'next/link'
+"use client";
 
-const navItems = {
-  '/': {
-    name: 'home',
+import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+
+const NAV_ITEMS = [
+  {
+    name: "About",
+    href: "#about",
   },
-  '/blog': {
-    name: 'blog',
+  {
+    name: "Experience",
+    href: "#experience",
   },
-  'https://vercel.com/templates/next.js/portfolio-starter-kit': {
-    name: 'deploy',
+  {
+    name: "Projects",
+    href: "#projects",
   },
+];
+
+function NavItem({ href, name, isActive }) {
+  return (
+    <Link
+      key={href}
+      href={href}
+      className={`group flex items-center py-3 ${isActive ? "active" : ""}`}
+    >
+      <span className="nav-indicator mr-4 h-px w-8 bg-slate-600 transition-all group-hover:w-16 group-hover:bg-slate-200 group-focus-visible:w-16 group-focus-visible:bg-slate-200 motion-reduce:transition-none"></span>
+      <span className="nav-text text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-slate-200 group-focus-visible:text-slate-200">
+        {name}
+      </span>
+    </Link>
+  );
 }
 
-export function Navbar() {
+export default function Navbar() {
+  const [hash, setHash] = useState(NAV_ITEMS[0].href);
+  const params = useSearchParams();
+
+  useEffect(() => {
+    setHash(window.location.hash);
+  }, [params]);
+
   return (
-    <aside className="-ml-[8px] mb-16 tracking-tight">
-      <div className="lg:sticky lg:top-20">
-        <nav
-          className="flex flex-row items-start relative px-0 pb-0 fade md:overflow-auto scroll-pr-6 md:relative"
-          id="nav"
-        >
-          <div className="flex flex-row space-x-0 pr-10">
-            {Object.entries(navItems).map(([path, { name }]) => {
-              return (
-                <Link
-                  key={path}
-                  href={path}
-                  className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1 px-2 m-1"
-                >
-                  {name}
-                </Link>
-              )
-            })}
-          </div>
-        </nav>
-      </div>
-    </aside>
-  )
+    <nav className="nav hidden lg:block" aria-label="In-page jump links">
+      <ul className="mt-16 w-max">
+        {NAV_ITEMS.map((route) => (
+          <NavItem key={route.name} {...route} isActive={route.href === hash} />
+        ))}
+      </ul>
+    </nav>
+  );
 }
