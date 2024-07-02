@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 const NAV_ITEMS = [
   {
@@ -19,7 +19,14 @@ const NAV_ITEMS = [
   },
 ];
 
-function NavItem({ href, name, isActive }) {
+function NavItem({ href, name }) {
+  const [isActive, setIsActive] = useState(false);
+  const params = useSearchParams();
+
+  useEffect(() => {
+    setIsActive(href === window.location.hash);
+  }, [params]);
+
   return (
     <Link
       key={href}
@@ -35,19 +42,14 @@ function NavItem({ href, name, isActive }) {
 }
 
 export default function Navbar() {
-  const [hash, setHash] = useState(NAV_ITEMS[0].href);
-  const params = useSearchParams();
-
-  useEffect(() => {
-    setHash(window.location.hash);
-  }, [params]);
-
   return (
     <nav className="nav hidden lg:block" aria-label="In-page jump links">
       <ul className="mt-16 w-max">
-        {NAV_ITEMS.map((route) => (
-          <NavItem key={route.name} {...route} isActive={route.href === hash} />
-        ))}
+        <Suspense>
+          {NAV_ITEMS.map((route) => (
+            <NavItem key={route.name} {...route} />
+          ))}
+        </Suspense>
       </ul>
     </nav>
   );
