@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useLayoutEffect, useState } from "react";
 
 const NAV_ITEMS = [
   {
@@ -19,13 +18,35 @@ const NAV_ITEMS = [
   },
 ];
 
-function NavItem({ href, name }) {
-  const [isActive, setIsActive] = useState(false);
-  const params = useSearchParams();
+type NavItemProps = { href: string; name: string };
 
-  useEffect(() => {
-    setIsActive(href === window.location.hash);
-  }, [params]);
+function NavItem({ href, name }: NavItemProps) {
+  const [isActive, setIsActive] = useState(false);
+
+  useLayoutEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          setIsActive(entry.isIntersecting);
+        });
+      },
+      {
+        threshold: 1,
+      }
+    );
+
+    const element = document.querySelector(href);
+    if (element) {
+      observer.observe(element);
+    }
+
+    return () => {
+      if (element) {
+        observer.unobserve(element);
+      }
+      observer.disconnect();
+    };
+  }, [href]);
 
   return (
     <Link
