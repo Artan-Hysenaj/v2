@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import Experiences from "./components/experiences";
 import Footer from "./components/footer";
 import Navbar from "./components/nav";
