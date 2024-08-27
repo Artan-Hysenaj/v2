@@ -1,4 +1,8 @@
-export default function SectionLink({ href, label }) {
+type SectionLinkProps = {
+  href: string;
+  label: string;
+};
+export default function SectionLink({ href, label }: SectionLinkProps) {
   return (
     <a
       className="font-medium text-slate-200 hover:text-teal-300 focus-visible:text-teal-300"

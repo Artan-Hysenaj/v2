@@ -82,7 +82,13 @@ const SOCIALS_DATA = [
   },
 ];
 
-function SocialsItem({ href, icon, label }) {
+type SocialsItemProps = {
+  href: string;
+  icon: React.ReactNode;
+  label: string;
+};
+
+function SocialsItem({ href, icon, label }: SocialsItemProps) {
   return (
     <li className="mr-5 text-xs shrink-0">
       <a
