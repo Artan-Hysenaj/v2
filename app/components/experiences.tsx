@@ -1,44 +1,59 @@
 import { Fragment } from "react";
 
-const EXPERIENCES_DATA = [
-  {
-    id: "project-kapsurvey",
-    timeline: "2024 — Present",
-    title: "Software Web Engineer, ReactJS",
-    description: `Build and maintain critical components used to construct Klaviyo’s frontend, 
-    across the whole product. Work closely with cross-functional teams, including developers, 
-    designers, and product managers, to implement and advocate for best practices in web accessibility.`,
-    company: "KS-APS",
-    companyLink: "https://ks-aps.com/",
-    techList: ["React", "Formik", "Ant Design"],
-  },
-  {
-    id: "project-oda",
-    timeline: "2023 — 2024",
-    title: "Software Web Engineer, ReactJS",
-    description: `Build and maintain critical components used to construct Klaviyo’s frontend,
-       across the whole product. Work closely with cross-functional teams, including
-        developers, designers, and product managers, to implement and advocate 
-        for best practices in web accessibility.`,
-    company: "Kutia",
-    companyLink: "https://www.klaviyo.com/",
-    techList: ["React", "TypeScript", "Tailwind CSS"],
-    links: [
-      {
-        title: "ScreenTime 2.0",
-        href: "https://starry.com/blog/product/whats-new-screentime-just-got-better-for-parents",
-      },
-      {
-        title: "Android App",
-        href: "https://play.google.com/store/apps/details?id=com.starry.management&amp;hl=en_US&amp;gl=US",
-      },
-    ],
-  },
-];
-
 type TechnologiesProps = {
   techList: string[];
 };
+
+type RelatedLinksProps = {
+  links: { title: string; href: string }[];
+};
+
+type ExperienceProps = {
+  timeline: string;
+  title: string;
+  company: string;
+  companyLink: string;
+  description: string;
+  techList?: TechnologiesProps["techList"];
+  links?: RelatedLinksProps["links"];
+};
+
+const EXPERIENCES_DATA = [
+  {
+    id: "exp-1",
+    timeline: "2024 — Present",
+    title: "Software Engineer",
+    description: `Build and maintain critical components used to construct KAPsurvey’s frontend, 
+    across the whole product. Work closely with cross-functional teams, including developers, 
+    designers, and product managers, to implement and advocate for best practices in frontend form development.`,
+    company: "KS-APS",
+    companyLink: "https://ks-aps.com/",
+    techList: ["React", "Formik", "Ant Design", "Zustand"],
+  },
+  {
+    id: "exp-free-1",
+    timeline: "2023",
+    title: "Software Engineer - Freelance",
+    description: `Played a key role as part of a team in the development of a big web application for a client in the retail industry.
+    The application dealt with huge amounts of data (200+ database tables) and required a lot of optimization to ensure a smooth user experience.`,
+    company: "Freelance",
+    companyLink: "",
+    techList: ["React", "TypeScript", "Apollo client", "GraphQL"],
+  },
+  {
+    id: "exp-2",
+    timeline: "2022 — 2024",
+    title: "Software Engineer",
+    description: `Build, style, and ship high-quality websites, design systems, mobile apps, and digital experiences for
+     a diverse array of projects for clients including Kutia internal products, Helvetas, OnTrack Solutions, 
+     ODA for medicinal team management. Provide leadership within frontend department through 
+     close collaboration, knowledge shares, and spearheading the monthly technical meetings`,
+    company: "Kutia",
+    companyLink: "https://kutia.net/",
+    techList: ["React", "TypeScript", "Tailwind CSS", "Redux"],
+  },
+];
+
 function Technologies({ techList = [] }: TechnologiesProps) {
   return (
     <ul className="mt-2 flex flex-wrap" aria-label="Technologies used">
@@ -53,9 +68,6 @@ function Technologies({ techList = [] }: TechnologiesProps) {
   );
 }
 
-type RelatedLinksProps = {
-  links: { title: string; href: string }[];
-};
 function RelatedLinks({ links = [] }: RelatedLinksProps) {
   return (
     <ul className="mt-2 flex flex-wrap" aria-label="Related links">
@@ -86,15 +98,6 @@ function RelatedLinks({ links = [] }: RelatedLinksProps) {
   );
 }
 
-type ExperienceProps = {
-  timeline: string;
-  title: string;
-  company: string;
-  companyLink: string;
-  description: string;
-  techList?: TechnologiesProps["techList"];
-  links?: RelatedLinksProps["links"];
-};
 function Experience({
   timeline,
   title,
@@ -137,9 +140,9 @@ function Experience({
                       aria-hidden="true"
                     >
                       <path
-                        fill-rule="evenodd"
+                        fillRule="evenodd"
                         d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z"
-                        clip-rule="evenodd"
+                        clipRule="evenodd"
                       ></path>
                     </svg>
                   </span>
@@ -187,9 +190,9 @@ export default function Experiences() {
                 aria-hidden="true"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                 ></path>
               </svg>
             </span>

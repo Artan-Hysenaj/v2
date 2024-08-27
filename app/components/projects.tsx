@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Fragment } from "react";
 
 const PROJECTS_DATA = [
@@ -5,10 +6,13 @@ const PROJECTS_DATA = [
     id: "project-1",
     timeline: "2024 — Present",
     title: "Spotify Profile",
+    company: "Personal Project",
+    companyLink: "",
     description:
       "Build and maintain critical components used to construct Klaviyo’s frontend, across the whole product. Work closely with cross-functional teams, including developers, designers, and product managers, to implement and advocate for best practices in web accessibility.",
     project: "Spotify Profile",
     projectLink: "https://spotify-profile.herokuapp.com/",
+    // links: [],
     techList: ["React", "TypeScript", "Storybook"],
     stars: [
       { href: "https://github.com/bchiang7/spotify-profile", count: 650 },
@@ -19,6 +23,24 @@ const PROJECTS_DATA = [
 type TechnologiesProps = {
   techList: string[];
 };
+type GithubStarsProps = {
+  stars: { href: string; count: number }[];
+};
+type RelatedLinksProps = {
+  links: { title: string; href: string }[];
+};
+type ProjectProps = {
+  timeline: string;
+  title: string;
+  company: string;
+  companyLink: string;
+  projectLink: string;
+  description: string;
+  techList?: TechnologiesProps["techList"];
+  links?: RelatedLinksProps["links"];
+  stars?: GithubStarsProps["stars"];
+};
+
 function Technologies({ techList = [] }: TechnologiesProps) {
   return (
     <ul className="mt-2 flex flex-wrap" aria-label="Technologies used">
@@ -33,9 +55,6 @@ function Technologies({ techList = [] }: TechnologiesProps) {
   );
 }
 
-type GithubStarsProps = {
-  stars: { href: string; count: number }[];
-};
 function GithubStars({ stars = [] }: GithubStarsProps) {
   return stars.map(({ href, count }) => (
     <a
@@ -54,9 +73,9 @@ function GithubStars({ stars = [] }: GithubStarsProps) {
         aria-hidden="true"
       >
         <path
-          fill-rule="evenodd"
+          fillRule="evenodd"
           d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
-          clip-rule="evenodd"
+          clipRule="evenodd"
         ></path>
       </svg>
       <span>{count}</span>
@@ -64,9 +83,6 @@ function GithubStars({ stars = [] }: GithubStarsProps) {
   ));
 }
 
-type RelatedLinksProps = {
-  links: { title: string; href: string }[];
-};
 function RelatedLinks({ links = [] }: RelatedLinksProps) {
   return (
     <ul className="mt-2 flex flex-wrap" aria-label="Related links">
@@ -97,17 +113,6 @@ function RelatedLinks({ links = [] }: RelatedLinksProps) {
   );
 }
 
-type ProjectProps = {
-  timeline: string;
-  title: string;
-  company: string;
-  companyLink: string;
-  projectLink: string;
-  description: string;
-  techList?: TechnologiesProps["techList"];
-  links?: RelatedLinksProps["links"];
-  stars?: GithubStarsProps["stars"];
-};
 function Project({
   timeline,
   title,
@@ -130,12 +135,11 @@ function Project({
               href={projectLink}
               target="_blank"
               rel="noreferrer noopener"
-              aria-label="Spotify Profile (opens in a new tab)"
+              aria-label={`${title} (opens in a new tab)`}
             >
               <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"></span>
               <span>
                 {title}
-
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
@@ -144,26 +148,21 @@ function Project({
                   aria-hidden="true"
                 >
                   <path
-                    fill-rule="evenodd"
+                    fillRule="evenodd"
                     d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z"
-                    clip-rule="evenodd"
+                    clipRule="evenodd"
                   ></path>
                 </svg>
               </span>
             </a>
           </h3>
-          <p className="mt-2 text-sm leading-normal">
-            Web app for visualizing personalized Spotify data. View your top
-            artists, top tracks, recently played tracks, and detailed audio
-            information about each track. Create and save new playlists of
-            recommended tracks based on your existing playlists and more.
-          </p>
+          <p className="mt-2 text-sm leading-normal">{description}</p>
           <GithubStars stars={stars} />
 
-          <Technologies techList={["React", "TypeScript", "Spotify API"]} />
+          <Technologies techList={techList} />
         </div>
-        <img
-          alt="Spotify Profile app homepage"
+        <Image
+          alt={title}
           loading="lazy"
           width="200"
           height="48"
@@ -183,12 +182,12 @@ export default function Projects() {
     <Fragment>
       <ol className="group/list">
         {PROJECTS_DATA.map((project) => (
-          <Project {...project} />
+          <Project key={project.id} {...project} />
         ))}
       </ol>
       <div className="mt-12">
         <a
-          className="inline-flex items-center font-medium leading-tight text-slate-200 font-semibold text-slate-200 group"
+          className="inline-flex items-center font-medium leading-tight text-slate-200 group"
           aria-label="View Full Project Archive"
           href="/archive"
         >
@@ -208,9 +207,9 @@ export default function Projects() {
                 aria-hidden="true"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                 ></path>
               </svg>
             </span>
