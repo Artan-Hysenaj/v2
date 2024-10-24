@@ -1,23 +1,5 @@
 import { Fragment } from "react";
 
-type TechnologiesProps = {
-  techList: string[];
-};
-
-type RelatedLinksProps = {
-  links: { title: string; href: string }[];
-};
-
-type ExperienceProps = {
-  timeline: string;
-  title: string;
-  company: string;
-  companyLink: string;
-  description: string;
-  techList?: TechnologiesProps["techList"];
-  links?: RelatedLinksProps["links"];
-};
-
 const EXPERIENCES_DATA = [
   {
     id: "exp-1",
@@ -37,7 +19,6 @@ const EXPERIENCES_DATA = [
     description: `Played a key role as part of a team in the development of a big web application for a client in the retail industry.
     The application dealt with huge amounts of data (200+ database tables) and required a lot of optimization to ensure a smooth user experience.`,
     company: "Freelance",
-    companyLink: "",
     techList: ["React", "TypeScript", "Apollo client", "GraphQL"],
   },
   {
@@ -54,6 +35,9 @@ const EXPERIENCES_DATA = [
   },
 ];
 
+type TechnologiesProps = {
+  techList: string[];
+};
 function Technologies({ techList = [] }: TechnologiesProps) {
   return (
     <ul className="mt-2 flex flex-wrap" aria-label="Technologies used">
@@ -68,6 +52,9 @@ function Technologies({ techList = [] }: TechnologiesProps) {
   );
 }
 
+type RelatedLinksProps = {
+  links: { title: string; href: string }[];
+};
 function RelatedLinks({ links = [] }: RelatedLinksProps) {
   return (
     <ul className="mt-2 flex flex-wrap" aria-label="Related links">
@@ -98,6 +85,15 @@ function RelatedLinks({ links = [] }: RelatedLinksProps) {
   );
 }
 
+type ExperienceProps = {
+  timeline: string;
+  title: string;
+  company: string;
+  description: string;
+  companyLink?: string;
+  techList?: TechnologiesProps["techList"];
+  links?: RelatedLinksProps["links"];
+};
 function Experience({
   timeline,
   title,
