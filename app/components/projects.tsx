@@ -1,21 +1,45 @@
 import Image from "next/image";
 import { Fragment } from "react";
 
-const PROJECTS_DATA = [
+const PROJECTS_DATA: (ProjectProps & { id: string })[] = [
   {
     id: "project-1",
-    timeline: "2024 — Present",
-    title: "Spotify Profile",
-    company: "Personal Project",
-    companyLink: "",
-    description:
-      "Build and maintain critical components used to construct Klaviyo’s frontend, across the whole product. Work closely with cross-functional teams, including developers, designers, and product managers, to implement and advocate for best practices in web accessibility.",
-    project: "Spotify Profile",
-    projectLink: "https://spotify-profile.herokuapp.com/",
-    // links: [],
-    techList: ["React", "TypeScript", "Storybook"],
+    title: "Ticket Edit Panel",
+    description: `My first ever angular app that I built to learn the basics of Angular. 
+      It's a simple ticket edit panel that allows you to edit some info but puts an extra focus on pixel perfect UI.`,
+    projectLink: "https://ticket-edit-panel.vercel.app/",
+    projectThumb: "/images/projects/ticket-edit-panel.png",
+    techList: ["Angular", "TypeScript", "Bootstrap"],
     stars: [
-      { href: "https://github.com/bchiang7/spotify-profile", count: 650 },
+      { href: "https://github.com/Artan-Hysenaj/ticket-edit-panel", count: 0 },
+    ],
+  },
+  {
+    id: "project-2",
+    title: "Cybertask",
+    description: `A simple phonebook app that I built as a task for a job interview.`,
+    projectLink: "https://cybermaniaks-task-phone-book.netlify.app/contacts",
+    projectThumb: "/images/projects/cybertask.png",
+    techList: ["React", "TypeScript", "Vite", "Tailwind CSS", "React Query"],
+    stars: [{ href: "https://github.com/Artan-Hysenaj/cybertask", count: 0 }],
+  },
+
+  {
+    id: "project-3",
+    title: "KS-APS task",
+    description: `
+    This task was assigned to me by KS-APS as a part of the interview process.
+    It's a simple user management app that fetches data from a fake API and displays it in a table and there is 
+    also a details page for each user. The main focus was project structure and code quality.
+    `,
+    projectLink: "https://ks-aps-optimistic-task.netlify.app/users",
+    projectThumb: "/images/projects/ks-aps-task.png",
+    techList: ["React", "Tailwind CSS", "React Query"],
+    stars: [
+      {
+        href: "https://github.com/Artan-Hysenaj/ks-aps-optimistic-task",
+        count: 0,
+      },
     ],
   },
 ];
@@ -23,24 +47,6 @@ const PROJECTS_DATA = [
 type TechnologiesProps = {
   techList: string[];
 };
-type GithubStarsProps = {
-  stars: { href: string; count: number }[];
-};
-type RelatedLinksProps = {
-  links: { title: string; href: string }[];
-};
-type ProjectProps = {
-  timeline: string;
-  title: string;
-  company: string;
-  companyLink: string;
-  projectLink: string;
-  description: string;
-  techList?: TechnologiesProps["techList"];
-  links?: RelatedLinksProps["links"];
-  stars?: GithubStarsProps["stars"];
-};
-
 function Technologies({ techList = [] }: TechnologiesProps) {
   return (
     <ul className="mt-2 flex flex-wrap" aria-label="Technologies used">
@@ -55,6 +61,9 @@ function Technologies({ techList = [] }: TechnologiesProps) {
   );
 }
 
+type GithubStarsProps = {
+  stars: { href: string; count: number }[];
+};
 function GithubStars({ stars = [] }: GithubStarsProps) {
   return stars.map(({ href, count }) => (
     <a
@@ -83,45 +92,54 @@ function GithubStars({ stars = [] }: GithubStarsProps) {
   ));
 }
 
-function RelatedLinks({ links = [] }: RelatedLinksProps) {
-  return (
-    <ul className="mt-2 flex flex-wrap" aria-label="Related links">
-      {links.map(({ title, href }) => (
-        <li key={title} className="mr-4">
-          <a
-            className="relative mt-2 inline-flex items-center text-sm font-medium text-slate-300 hover:text-teal-300 focus-visible:text-teal-300"
-            href={href}
-            target="_blank"
-            rel="noreferrer noopener"
-            aria-label="${title} (opens in a new tab)"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="mr-1 h-3 w-3"
-              aria-hidden="true"
-            >
-              <path d="M12.232 4.232a2.5 2.5 0 013.536 3.536l-1.225 1.224a.75.75 0 001.061 1.06l1.224-1.224a4 4 0 00-5.656-5.656l-3 3a4 4 0 00.225 5.865.75.75 0 00.977-1.138 2.5 2.5 0 01-.142-3.667l3-3z"></path>
-              <path d="M11.603 7.963a.75.75 0 00-.977 1.138 2.5 2.5 0 01.142 3.667l-3 3a2.5 2.5 0 01-3.536-3.536l1.225-1.224a.75.75 0 00-1.061-1.06l-1.224 1.224a4 4 0 105.656 5.656l3-3a4 4 0 00-.225-5.865z"></path>
-            </svg>
-            <span>{title}</span>
-          </a>
-        </li>
-      ))}
-    </ul>
-  );
-}
+// type RelatedLinksProps = {
+//   links: { title: string; href: string }[];
+// };
+// function RelatedLinks({ links = [] }: RelatedLinksProps) {
+//   return (
+//     <ul className="mt-2 flex flex-wrap" aria-label="Related links">
+//       {links.map(({ title, href }) => (
+//         <li key={title} className="mr-4">
+//           <a
+//             className="relative mt-2 inline-flex items-center text-sm font-medium text-slate-300 hover:text-teal-300 focus-visible:text-teal-300"
+//             href={href}
+//             target="_blank"
+//             rel="noreferrer noopener"
+//             aria-label="${title} (opens in a new tab)"
+//           >
+//             <svg
+//               xmlns="http://www.w3.org/2000/svg"
+//               viewBox="0 0 20 20"
+//               fill="currentColor"
+//               className="mr-1 h-3 w-3"
+//               aria-hidden="true"
+//             >
+//               <path d="M12.232 4.232a2.5 2.5 0 013.536 3.536l-1.225 1.224a.75.75 0 001.061 1.06l1.224-1.224a4 4 0 00-5.656-5.656l-3 3a4 4 0 00.225 5.865.75.75 0 00.977-1.138 2.5 2.5 0 01-.142-3.667l3-3z"></path>
+//               <path d="M11.603 7.963a.75.75 0 00-.977 1.138 2.5 2.5 0 01.142 3.667l-3 3a2.5 2.5 0 01-3.536-3.536l1.225-1.224a.75.75 0 00-1.061-1.06l-1.224 1.224a4 4 0 105.656 5.656l3-3a4 4 0 00-.225-5.865z"></path>
+//             </svg>
+//             <span>{title}</span>
+//           </a>
+//         </li>
+//       ))}
+//     </ul>
+//   );
+// }
 
+type ProjectProps = {
+  title: string;
+  projectLink: string;
+  projectThumb: string;
+  description: string;
+  techList?: TechnologiesProps["techList"];
+  stars?: GithubStarsProps["stars"];
+  // links?: RelatedLinksProps["links"];
+};
 function Project({
-  timeline,
   title,
-  company,
-  companyLink,
   projectLink,
+  projectThumb,
   description,
   techList = [],
-  links = [],
   stars = [],
 }: ProjectProps) {
   return (
@@ -170,7 +188,7 @@ function Project({
           data-img="1"
           className="rounded border-2 border-slate-200/10 transition group-hover:border-slate-200/30 sm:order-1 sm:col-span-2 sm:translate-y-1"
           style={{ color: "transparent" }}
-          src="https://brittanychiang.com/_next/image?url=%2Fimages%2Fprojects%2Fcourse-card.png&w=256&q=75"
+          src={projectThumb}
         />
       </div>
     </li>
